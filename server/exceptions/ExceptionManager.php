@@ -1,12 +1,5 @@
 <?php
 
-/**
- *
- * @version 1.0
- * @author  ΤΕΙ Αθήνας
- * @package Exceptions
- */
-
 class CustomException extends Exception{
 
     protected $title;
