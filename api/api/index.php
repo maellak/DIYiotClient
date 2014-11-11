@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: text/html; charset=utf-8");
+//header("Content-Type: text/html; charset=utf-8");
 header('Content-Type: application/json');
 
 chdir("../server");
@@ -12,7 +12,12 @@ $app = new \Slim\Slim();
 $app->config('debug', true);
 
 //here set all routes 
-$app->map('/ls', 'LsController')->via('GET');
+$app->map('/reboot', 'rebootController')->via('GET');
+$app->map('/reload', 'reloadController')->via('GET');
+$app->map('/showall', 'showallController')->via('GET');
+$app->map('/ps', 'psController')->via('GET');
+$app->map('/isAlive', 'isAliveController')->via('GET');
+$app->map('/isAlivelocal', 'isAlivelocalController')->via('GET');
 
 //function not found
 $app->notFound(function () use ($app) 
@@ -33,7 +38,8 @@ $app->notFound(function () use ($app)
         $result["message"] = "[".$app->request()->getMethod()."][".$controller."]:".$e->getMessage();
     }
 
-    echo toGreek( json_encode( $result ) ); 
+    echo  json_encode( $result ); 
+    //echo toGreek( json_encode( $result ) ); 
 
 });
 
@@ -47,7 +53,7 @@ function PrepareResponse()
 
     $app->contentType('application/json');
     $app->response()->headers()->set('Content-Type', 'application/json; charset=utf-8');
-    $app->response()->headers()->set('X-Powered-By', 'ΤΕΙ Αθήνας');
+    $app->response()->headers()->set('X-Powered-By', 'diyiot-tools');
     $app->response()->setStatus(200);
 }
 
@@ -90,6 +96,7 @@ function loadParameters()
     return $params;
 }
 
+/*
 function replace_unicode_escape_sequence($match) {
     return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
 }
@@ -98,12 +105,12 @@ function toGreek($value)
 {
     return preg_replace_callback('/\\\\u([0-9a-f]{4})/i', 'replace_unicode_escape_sequence', $value ? $value : array());
 }
-
+*/
 
 #=======Controllers ========================================================================
 #===========================================================================================
  
-function LsController()
+function reloadController()
 {
     global $app;
     $params = loadParameters();
@@ -111,15 +118,103 @@ function LsController()
     switch ( strtoupper( $app->request()->getMethod() ) )
     {
         case 'GET': 
-            $result = GetLs(
-                $params["path"]       
+            $result = reload(
+                $params["info"]       
             );      
             break;
     }
 
     PrepareResponse();
-    $app->response()->setBody( toGreek( json_encode( $result ) ) );
+    $app->response()->setBody( json_encode( $result )  );
 }
 
+function rebootController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'GET': 
+            $result = reboot(
+                $params["info"]       
+            );      
+            break;
+    }
 
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
+
+function showallController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'GET': 
+            $result = showall(
+                $params["info"]       
+            );      
+            break;
+    }
+
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
+
+function psController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'GET': 
+            $result = ps(
+                $params["info"]       
+            );      
+            break;
+    }
+
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
+
+function isAliveController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'GET': 
+            $result = isAlive(
+                $params["info"]       
+            );      
+            break;
+    }
+
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
+
+function isAlivelocalController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'GET': 
+            $result = isAlivelocal(
+                $params["info"]       
+            );      
+            break;
+    }
+
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
 ?>

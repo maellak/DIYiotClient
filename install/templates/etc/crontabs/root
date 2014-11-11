@@ -1,0 +1,2 @@
+*/5 * * * * /root/admin/isAlive.sh
+0 3 * * * reboot 
