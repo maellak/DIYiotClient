@@ -3,13 +3,13 @@
 
 ## How to Use It
 
-### Download
+### Download it
 
 ### Config
 
 Follow these steps:
 
-1. Download and extract in /root dir
+1. Download and extract it in /root dir
 
 2. edit install/applconfig
    put your  username, password and apihost
