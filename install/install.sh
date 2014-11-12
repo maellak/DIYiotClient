@@ -14,6 +14,9 @@ libusb \
 libusb-1.0 
 
 # make links and dirs
+mkdir /root/admin
+cp -f templates/admin/* /root/admin
+
 ln -s /usr/bin/php-cli /usr/bin/diyiotserver
 cp -f templates/etc/rc.local /etc/rc.local
 cp -f templates/etc/init.d/diyiotsocat /etc/init.d
@@ -28,6 +31,7 @@ chmod 600 /etc/crontabs/root
 # *********************************
 /usr/bin/php-cli  ./php/getconfig.php
 
+cp applconfig /root/admin
 
 #setting tty
 # *********************************
