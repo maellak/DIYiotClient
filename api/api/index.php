@@ -12,6 +12,7 @@ $app = new \Slim\Slim();
 $app->config('debug', true);
 
 //here set all routes 
+$app->map('/writesketch', 'writesketchController')->via('POST');
 $app->map('/reboot', 'rebootController')->via('GET');
 $app->map('/reload', 'reloadController')->via('GET');
 $app->map('/showall', 'showallController')->via('GET');
@@ -210,6 +211,24 @@ function isAlivelocalController()
         case 'GET': 
             $result = isAlivelocal(
                 $params["info"]       
+            );      
+            break;
+    }
+
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
+
+function writesketchController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'POST': 
+            $result = writesketch(
+                $params["binfile"]       
             );      
             break;
     }
