@@ -20,7 +20,7 @@ Follow these steps:
 	2. na echeis dimiourgissi ena organisation
 	3. na echeis dimiourgissi ena device
 
-   put your  username, password and apihost (from step 3. above)
+   put your  username, password and apihost (from step iii above)
 
 4. Change into the install directory and run "install.sh"
 
