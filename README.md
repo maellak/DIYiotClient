@@ -12,9 +12,15 @@ Follow these steps:
 1. Download and extract it in /root dir
 
 2. Edit install/applconfig
-   put your  username, password and apihost
 
-3. Put your dev key in "/root/id_dsa" file
+   info
+   ---
+   Prepei prota 
+	1. na ise registered user in DIYiotServer
+	2. na echeis dimiourgissi ena organisation
+	3. na echeis dimiourgissi ena device
+
+   put your  username, password and apihost (from step 3. above)
 
 4. Change into the install directory and run "install.sh"
 
