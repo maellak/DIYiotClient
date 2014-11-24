@@ -69,7 +69,7 @@ if ( $config["DEV"] === '' || !isset($config["DEV"]))
 
 
 $config["BAUD"] =  trim($i["result"]["devinfo"][0]["baud"]);
-if ( $config["BAUD"] === '' || !isset($config["baud"]))
+if ( $config["BAUD"] === '' || !isset($config["BAUD"]))
 	$error=1;
 
 $config["key"] =  trim($i["result"]["devinfo"]["key"]);
