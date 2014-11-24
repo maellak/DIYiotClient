@@ -49,6 +49,8 @@ chmod + x  /etc/init.d/diyiotserver
 chmod + x  /etc/init.d/diyiotsocat
 cp -f templates/etc/crontabs/root /etc/crontabs/root
 chmod 600 /etc/crontabs/root
+ln -s /etc/init.d/diyiotserver /etc/rc.d/S60diyiotserver
+ln -s /etc/init.d/diyiotsocat /etc/rc.d/S60diyiotsocat
 
 #
 # connect to server
