@@ -1,7 +1,6 @@
 #!/bin/ash
-diyiotserver=50001
-diyiotsocat=50000
-date1=`tail -1 /root/DIYiotClient-master/server/tmptmptmp`
+. /root/admin/applconfig.sh
+date1=`tail -1 /root/api/server/tmptmptmp`
 date2=$(date +"%s")
 diff=$(($date2-$date1))
 #echo "$(($diff / 60)) minutes and $(($diff % 60)) seconds elapsed."

@@ -6,6 +6,7 @@ SERVICE_DAEMONIZE=1
 SERVICE_WRITE_PID=1
 
 
+. /root/admin/applconfig.sh
 
 stop() {
 	service_stop /usr/bin/socat
@@ -14,9 +15,9 @@ stop() {
 start() {
 export TERM='xterm'
 
-	DEV=/dev/ttyACM0
-	dataport=50000
-	BAUD=115200
+	DEV=$DEV
+	dataport=$dataport
+	BAUD=$BAUD
         stty -F $DEV $BAUD                                
         service_start /usr/bin/socat tcp-l:$dataport,reuseaddr,fork file:$DEV,nonblock,raw,echo=0,waitlock=/var/run/tty,b$BAUD
 }

@@ -13,9 +13,33 @@ kmod-usb-serial-ftdi \
 libusb \
 libusb-1.0 
 
+opkg update
+opkg install openssh-server autossh
+
+/etc/init.d/sshd enable
+/etc/init.d/sshd start
+
+/etc/init.d/dropbear disable
+/etc/init.d/dropbear stop
+
+
+opkg update
+opkg install openssh-sftp-server
+opkg install libopenssl
+opkg install openssh-client
+opkg install openssh-client-utils
+opkg install openssh-keygen
+opkg install openssh-moduli
+opkg install openssh-server
+opkg install openssh-sftp-client
+
+
 # make links and dirs
 mkdir /root/admin
 cp -f templates/admin/* /root/admin
+
+
+
 
 ln -s /usr/bin/php-cli /usr/bin/diyiotserver
 cp -f templates/etc/rc.local /etc/rc.local
@@ -31,7 +55,7 @@ chmod 600 /etc/crontabs/root
 # *********************************
 /usr/bin/php-cli  ./php/getconfig.php
 
-cp applconfig /root/admin
+mv ../api /root
 
 #setting tty
 # *********************************
