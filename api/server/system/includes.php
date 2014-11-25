@@ -10,6 +10,7 @@ require_once('exceptions/ExceptionManager.php');
 
 //api
 require_once('../api/post/diy_writesketch.php');
+require_once('../api/post/diyexec.php');
 require_once('../api/get/reboot.php');
 require_once('../api/get/reload.php');
 require_once('../api/get/showall.php');

@@ -13,6 +13,7 @@ $app->config('debug', true);
 
 //here set all routes 
 $app->map('/writesketch', 'writesketchController')->via('POST');
+$app->map('/diyexec', 'diyexecController')->via('POST');
 $app->map('/reboot', 'rebootController')->via('GET');
 $app->map('/reload', 'reloadController')->via('GET');
 $app->map('/showall', 'showallController')->via('GET');
@@ -229,6 +230,24 @@ function writesketchController()
         case 'POST': 
             $result = writesketch(
                 $params["binfile"]       
+            );      
+            break;
+    }
+
+    PrepareResponse();
+    $app->response()->setBody( json_encode( $result )  );
+}
+
+function diyexecController()
+{
+    global $app;
+    $params = loadParameters();
+		 
+    switch ( strtoupper( $app->request()->getMethod() ) )
+    {
+        case 'POST': 
+            $result = diyexec(
+                $params["exec"]       
             );      
             break;
     }
