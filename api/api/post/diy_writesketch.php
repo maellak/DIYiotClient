@@ -42,7 +42,6 @@ function writesketch($payload,$storage){
         $result["message"] = "[".$result["method"]."][".$result["function"]."]:".$e->getMessage();
      }
 
-/*
    try {
 	$output2 = shell_exec("/etc/init.d/diyiotsocat start");
     	$result["diyiotsocatstart"]=  $output2;
@@ -54,7 +53,6 @@ function writesketch($payload,$storage){
         $result["status"] = $e->getCode();
         $result["message"] = "[".$result["method"]."][".$result["function"]."]:".$e->getMessage();
      }
-*/
 
     return $result;
 }
