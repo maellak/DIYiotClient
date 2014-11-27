@@ -15,6 +15,7 @@ function writesketch($payload,$storage){
     $client_id=$up->client_id;
     $binfilename = base64_decode($binfile);
    try {
+	mkdir("tmp");
 	$file="tmp/file.hex";
 	file_put_contents($file, $binfilename);
 
