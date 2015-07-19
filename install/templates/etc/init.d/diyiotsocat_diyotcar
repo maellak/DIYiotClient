@@ -1,0 +1,74 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+
+SERVICE_DAEMONIZE=1
+SERVICE_WRITE_PID=1
+
+
+. /root/admin/applconfig.sh
+
+stop() {
+	service_stop /usr/bin/socat
+}
+
+start() {
+export TERM='xterm'
+
+	DEV=$DEV
+	dataport=$dataport
+	BAUD=$BAUD
+	sh /root/admin/resetusbarduino.sh
+
+        stty -F /dev/ttysonar $BAUD                                
+        #service_start /usr/bin/socat tcp-l:1234,forever,reuseaddr,fork file:$DEV,nonblock,raw,echo=0,unlink-close=0,waitlock=/var/run/tty,b$BAUD
+	# usr/local/bin/socat tcp-l:2020,reuseaddr,fork,crlf file:/dev/ttyACM0,echo=0,b115200,raw,crnl,icanon=1
+        #service_start /usr/bin/socat tcp-l:1234,reuseaddr,fork file:$DEV,nonblock,raw,echo=0,waitlock=/var/run/tty,b$BAUD 
+        #service_start /usr/bin/socat tcp-l:1234,forever,reuseaddr,fork,crlf file:$DEV,nonblock,raw,echo=0,crnl,icanon=1,waitlock=/var/run/tty,b$BAUD 
+	/bin/rm -f /root/arduinocloud
+	/bin/rm -f /tmp/arduinocloud
+
+	mkfifo /tmp/arduinocloud
+	/bin/ln -s /tmp/arduinocloud /root/arduinocloud
+	
+        #service_start /usr/bin/socat tcp-l:50044,forever,reuseaddr,fork,crlf SYSTEM:'tee /root/x | socat - "TCP:127.0.0.1:1234" '  file:$DEV,nonblock,raw,echo=0,crnl,icanon=1,waitlock=/var/run/tty,b$BAUD
+        #service_start /usr/bin/socat tcp-l:50044,forever,reuseaddr,fork,crlf file:$DEV,nonblock,raw,echo=0,crnl,icanon=1,waitlock=/var/run/tty,b$BAUD
+        #service_start /usr/bin/socat file:$DEV,nonblock,raw,echo=0,crnl,icanon=1,waitlock=/var/run/tty,b$BAUD system:'tee /root/x > /dev/null'
+        #service_start /usr/bin/socat file:$DEV,nonblock,raw,echo=0,crnl,icanon=1,waitlock=/var/run/tty,b$BAUD system:'tee /root/x > /dev/null'
+	#service_start /usr/bin/socat /dev/ttyACM1,raw,echo=0,crnl /dev/tty11,raw,echo=0,crnl
+        #service_start /usr/bin/socat tcp-l:$diyiotsocat,reuseaddr,fork file:$DEV,nonblock,raw,echo=0,waitlock=/var/run/tty,b$BAUD 
+        #service_start /usr/bin/socat TCP-LISTEN:1234,fork TCP:127.0.0.1:$diyiotsocat
+	
+	#service_start /usr/bin/socat -u tcp-l:1234,fork,reuseaddr system:'tee /root/arduinosonar > /dev/null'
+
+	#service_start /usr/bin/socat - tcp-l:1234,fork,reuseaddr 
+	#service_start /usr/bin/socat - tcp-l:$diyiotsocat,fork,reuseaddr 
+
+	#service_start /usr/bin/socat  tcp-l:1234,fork,reuseaddr TCP:127.0.0.1:12345
+	#service_start /usr/bin/socat  tcp-l:1235,fork,reuseaddr TCP:127.0.0.1:$diyiotsocat
+
+	#service_start /usr/bin/socat -u tcp-l:1234,fork,reuseaddr system:'/root/arduinocloud > /dev/null'
+	#service_start /usr/bin/socat - tcp-l:$diyiotsocat,fork,reuseaddr,crlf 
+
+	#service_start /usr/bin/socat  TCP-LISTEN:1234,fork,reuseaddr SYSTEM:'/root/arduinosonar'
+	#service_start /usr/bin/socat  TCP-LISTEN:1234,fork,reuseaddr SYSTEM:'tee /root/arduinocloud /root/arduinosonar'
+	#service_start /usr/bin/socat  TCP-LISTEN:1234,fork,reuseaddr SYSTEM:'/usr/bin/diyiottee /root/arduinocloud /root/arduinosonar'
+	#service_start /usr/bin/socat  TCP-LISTEN:1234,fork,reuseaddr SYSTEM:'tee /root/arduinocloud /root/arduinosonar'
+	service_start /usr/bin/socat  TCP-LISTEN:$diyiotsocat,fork,reuseaddr file:'/root/arduinocloud'
+#until myserver; do
+    #echo "Server 'myserver' crashed with exit code $?.  Respawning.." >&2
+    #cat /dev/ttysonar | socat - tcp:127.0.0.1:1234 > /dev/null &
+    #sleep 1
+#done
+
+	#service_start /usr/bin/socat -u TCP-LISTEN:1234,fork,reuseaddr SYSTEM:'tee /root/arduinocloud | socat - "TCP:127.0.0.1:50044"'
+	#service_start /usr/bin/socat -u tcp-l:1234,fork,reuseaddr system:'/root/arduinosonar > /dev/null'
+	#service_start /usr/bin/socat - tcp-l:1234,fork,reuseaddr,crlf 
+	#sleep 1
+	#cat /dev/ttyACM0 | tee socat - tcp:localhost:50044 | tee socat - tcp:localhost:1234 > /dev/null &
+	#cat /dev/ttyACM0 | socat - tcp:localhost:1234 > /dev/null &
+        # cat $DEV | tee socat - tcp:localhost:$diyiotsocat | tee socat - tcp:localhost:1234 > /dev/null &
+        #cat $DEV | tee socat - tcp:localhost:$diyiotsocat |  tee stage2.txt
+        #/usr/bin/php-cli acm_read_write.php | /usr/bin/socat - tcp-l:50044,reuseaddr,fork &
+}
+                                        
